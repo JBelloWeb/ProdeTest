@@ -341,23 +341,6 @@ button:hover {
     border: 1px solid #dc3545;
 }
 
-/* Estilos para acceso denegado */
-.acceso-denegado {
-    opacity: 0.5 !important;
-    pointer-events: none !important;
-    filter: grayscale(100%);
-}
-
-.acceso-denegado input,
-.acceso-denegado button {
-    cursor: not-allowed !important;
-}
-
-.acceso-denegado button {
-    background: linear-gradient(135deg, #666 0%, #999 100%) !important;
-    color: #ccc !important;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     main {
