@@ -1,54 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Prode - Pronóstico</title>
 </head>
 <body>
     <main>
         <form action="https://script.google.com/macros/s/AKfycbyEXVZGyBf1Uj25tOexKtWN3U7mn7B74scslvLT4jTVrUS-Z67L_3M8NAys16QngZPh/exec" method="POST">
     
             <label for="usuario">Tu Nombre:</label>
-            <input type="text" id="usuario" name="usuario" required placeholder="Ej: Juan Peralta">
+            <input type="text" id="usuario" name="usuario" required placeholder="Baden Powell">
             <hr>
 
-            <h3>Partido 1</h3>
+            <h3>🇦🇷 Fase de Grupos - Argentina</h3>
             <div class="match">
                 <div class="pais">
                     <label for="argentina1">Argentina</label> 
-                    <input type="number" name="argentina1" required>
+                    <input type="number" name="argentina1" required placeholder="0">
                 </div>
                 <div class="pais">
                     <label for="argelia">Argelia</label>
-                    <input type="number" name="argelia" required>
+                    <input type="number" name="argelia" required placeholder="0">
                 </div>
             </div>
             <div class="match">
                 <div class="pais">
                     <label for="argentina2">Argentina</label> 
-                    <input type="number" name="argentina2" required>
+                    <input type="number" name="argentina2" required placeholder="0">
                 </div>
                 <div class="pais">
                     <label for="austria">Austria</label>
-                    <input type="number" name="austria" required>
+                    <input type="number" name="austria" required placeholder="0">
                 </div>
             </div>
             <div class="match">
                 <div class="pais">
                     <label for="argentina3">Argentina</label> 
-                    <input type="number" name="argentina3" required>
+                    <input type="number" name="argentina3" required placeholder="0">
                 </div>
                 <div class="pais">
                     <label for="jordania">Jordania</label>
-                    <input type="number" name="jordania" required>
+                    <input type="number" name="jordania" required placeholder="0">
                 </div>
             </div>
 
+            <hr>
+
+            <div class="bracket-container" id="mundial-bracket">
+            </div>
+
+            <input type="hidden" id="bracket_data" name="bracket_data">
+
             <button type="submit">Enviar Pronóstico</button>
         </form>
-
+        <script src="bracket.js" defer></script>
     </main>
 </body>
 </html>

@@ -1,20 +1,71 @@
-.match{
+.match {
     display: flex;
+    gap: 15px;
+    align-items: center;
+    background: linear-gradient(135deg, #e8f4f8 0%, #f0f9ff 100%);
+    border: 2px solid #0066cc;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+    transition: all 0.3s ease;
 }
-.pais{
+
+.match:hover {
+    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.25);
+    transform: translateY(-2px);
+}
+
+.pais {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    gap: 5px;
+}
+
+.pais label {
+    font-weight: bold;
+    color: #0051a3;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pais input[type="number"] {
+    padding: 10px 12px;
+    border: 2px solid #0066cc;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: white;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.pais input[type="number"]:focus {
+    outline: none;
+    border-color: #0099ff;
+    box-shadow: 0 0 8px rgba(0, 153, 255, 0.3);
+    background-color: #f9fcff;
+}
+
+.pais input[type="number"]::placeholder {
+    color: #aaa;
 }
 
 body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+body.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
         .login-box {
             background-color: white;
             padding: 30px;
@@ -64,3 +115,272 @@ body {
         }
         .exito { color: #28a745; }
         .error { color: #dc3545; }
+
+        /* Contenedor principal - Responsive */
+.bracket-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding: 20px 10px;
+    overflow-x: auto;
+    font-family: sans-serif;
+    background-color: #f8f9fa;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* Cada columna representa una ronda (16avos, Octavos, etc.) */
+.round-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: 160px;
+    flex-shrink: 0;
+}
+
+.round-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 12px;
+}
+
+ main {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        
+        main form {
+            width: 100%;
+        }
+        
+        main h3 {
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #0066cc 0%, #0051a3 100%);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 5px solid #0099ff;
+            box-shadow: 0 3px 8px rgba(0, 102, 204, 0.2);
+        }
+        
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+        
+        main input[type="text"],
+        main input[type="number"] {
+            box-sizing: border-box;
+        }
+        
+        main button[type="submit"] {
+            width: 100%;
+            max-width: 200px;
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        main button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .match {
+                flex-direction: column;
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .pais label {
+                font-size: 13px;
+            }
+            
+            .pais input[type="number"] {
+                font-size: 14px;
+                padding: 8px 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .match {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+            
+            .pais label {
+                font-size: 12px;
+            }
+            
+            .pais input[type="number"] {
+                font-size: 13px;
+                padding: 7px 8px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                padding: 15px;
+            }
+            
+            main h3 {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            main {
+                padding: 10px;
+            }
+            
+            main h3 {
+                font-size: 14px;
+            }
+        }
+
+/* Tarjeta de cada partido */
+.match-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    min-height: auto;
+}
+
+.team-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px 0;
+    gap: 4px;
+}
+
+/* Inputs de nombres y goles */
+.team-input {
+    flex: 1;
+    min-width: 80px;
+    padding: 4px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* Estilo para selects */
+.team-input[type="text"],
+select.team-input {
+    flex: 1;
+    min-width: 80px;
+    padding: 4px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: white;
+    font-family: inherit;
+}
+
+/* Diferenciamos visualmente los inputs que el usuario no debe tocar */
+.team-input[readonly] {
+    background-color: #f0f0f0;
+    color: #666;
+    border: 1px dashed #ccc;
+}
+
+.score-input {
+    width: 40px;
+    padding: 4px;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .bracket-container {
+        gap: 10px;
+        padding: 15px 5px;
+    }
+    
+    .round-column {
+        min-width: 140px;
+    }
+    
+    .match-card {
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+    
+    .round-title {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+    
+    .team-input {
+        min-width: 70px;
+        font-size: 11px;
+        padding: 3px;
+    }
+    
+    .score-input {
+        width: 35px;
+        font-size: 11px;
+        padding: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bracket-container {
+        gap: 5px;
+        padding: 10px 3px;
+    }
+    
+    .round-column {
+        min-width: 120px;
+    }
+    
+    .match-card {
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .round-title {
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .team-input {
+        min-width: 60px;
+        font-size: 10px;
+        padding: 2px;
+    }
+    
+    .score-input {
+        width: 30px;
+        font-size: 10px;
+        padding: 2px;
+    }
+}
