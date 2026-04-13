@@ -117,36 +117,40 @@ body.login-page {
         .error { color: #dc3545; }
 
         /* Contenedor principal - Responsive */
-.bracket-container {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    padding: 20px 10px;
-    overflow-x: auto;
-    font-family: sans-serif;
-    background-color: #f8f9fa;
-    width: 100%;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
+        /*
+        .bracket-container {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            padding: 20px 10px;
+            overflow-x: auto;
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+            width: 100%;
+            box-sizing: border-box;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        */
 
-/* Cada columna representa una ronda (16avos, Octavos, etc.) */
-.round-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    min-width: 160px;
-    flex-shrink: 0;
-}
+        /* Cada columna representa una ronda (16avos, Octavos, etc.) */
+        /*
+        .round-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            min-width: 160px;
+            flex-shrink: 0;
+        }
 
-.round-title {
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 12px;
-}
+        .round-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 12px;
+        }
+        */
 
  main {
             width: 100%;

@@ -1,7 +1,8 @@
 
-        document.addEventListener("DOMContentLoaded", () => {
+/*
+document.addEventListener("DOMContentLoaded", () => {
     const bracketContainer = document.getElementById('mundial-bracket');
-    
+
     // Grupos del Mundial 2026
     const grupos = {
         A: ["México", "Uruguay", "Panamá", "Jamaica"],
@@ -124,7 +125,7 @@
         if (e.target.classList.contains('score-input') || e.target.classList.contains('team-input')) {
             const matchCard = e.target.closest('.match-card');
             const currentId = parseInt(matchCard.dataset.matchId);
-            
+
             const teamA = matchCard.querySelector('.team-A').value;
             const scoreA = parseInt(matchCard.querySelector('.score-A').value);
             const teamB = matchCard.querySelector('.team-B').value;
@@ -142,7 +143,7 @@
             const nextMatchId = getNextMatchId(currentId);
             if (nextMatchId && winner !== "") {
                 const nextMatchCard = document.querySelector(`.match-card[data-match-id="${nextMatchId}"]`);
-                
+
                 // Si el ID actual es impar, el ganador va arriba (Team A). Si es par, va abajo (Team B).
                 if (currentId % 2 !== 0) {
                     nextMatchCard.querySelector('.team-A').value = winner;
@@ -167,9 +168,10 @@
                     golesB: card.querySelector('.score-B').value
                 });
             });
-            
+
             // Transformamos todo el torneo a texto JSON y lo metemos al input oculto
             document.getElementById('bracket_data').value = JSON.stringify(allMatches);
         });
     }
 });
+*/
