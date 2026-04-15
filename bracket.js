@@ -1,5 +1,3 @@
-
-/*
 document.addEventListener("DOMContentLoaded", () => {
     const bracketContainer = document.getElementById('mundial-bracket');
 
@@ -154,24 +152,100 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 3. EMPAQUETAR DATOS PARA APPS SCRIPT ANTES DE ENVIAR
-    const form = document.querySelector('form');
-    if(form) {
-        form.addEventListener('submit', () => {
-            const allMatches = [];
-            document.querySelectorAll('.match-card').forEach(card => {
-                allMatches.push({
-                    id: card.dataset.matchId,
-                    equipoA: card.querySelector('.team-A').value,
-                    golesA: card.querySelector('.score-A').value,
-                    equipoB: card.querySelector('.team-B').value,
-                    golesB: card.querySelector('.score-B').value
-                });
-            });
+    // 3. CONEXIÓN CON SUPABASE Y LÓGICA DE SESIÓN
+    const supabaseUrl = 'https://juuwwrzrxensvjjzlpha.supabase.co';
+    const supabaseKey = 'sb_publishable_v38rCE76Ze5wCobL1uBT9Q_Vs_xxUmU';
+    window.supabaseClient = window.supabaseClient || window.supabase.createClient(supabaseUrl, supabaseKey);
+    const supabaseClient = window.supabaseClient;
 
-            // Transformamos todo el torneo a texto JSON y lo metemos al input oculto
-            document.getElementById('bracket_data').value = JSON.stringify(allMatches);
+    // --- A. PROTECCIÓN DE RUTA Y BIENVENIDA ---
+    // Leemos el ticket del navegador
+    const usuarioString = localStorage.getItem('usuarioLogueado');
+    
+    // Si no hay ticket, lo pateamos al login
+    if (!usuarioString) {
+        alert("Debes iniciar sesión para ver esta página.");
+        window.location.href = 'index.html';
+    }
+
+    // Si hay ticket, extraemos sus datos y lo saludamos
+    const usuarioActivo = JSON.parse(usuarioString);
+    document.getElementById('bienvenidaUsuario').textContent = `¡Armá tu Prode, ${usuarioActivo.nombre}!`;
+
+
+    // --- B. ENVÍO DE DATOS ---
+    const form = document.getElementById('formulario-prode');
+    
+    if(form) {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); 
+
+            const btnSubmit = form.querySelector('button[type="submit"]');
+            btnSubmit.textContent = "Guardando...";
+            btnSubmit.disabled = true;
+
+            try {
+                // 1. Preparamos el array con los partidos (Usando el ID del localStorage)
+                const prediccionesParaInsertar = [];
+                document.querySelectorAll('.match-card').forEach(card => {
+                    prediccionesParaInsertar.push({
+                        usuario_id: usuarioActivo.id, // ¡Aquí usamos el ID real de la base de datos!
+                        partido_id: parseInt(card.dataset.matchId),
+                        equipo_a_pred: card.querySelector('.team-A').value || null,
+                        equipo_b_pred: card.querySelector('.team-B').value || null,
+                        goles_a_pred: parseInt(card.querySelector('.score-A').value) || 0,
+                        goles_b_pred: parseInt(card.querySelector('.score-B').value) || 0
+                    });
+                });
+
+                // 2. Insertamos las predicciones
+                const { error: errorPredicciones } = await supabaseClient
+                    .from('predicciones')
+                    .insert(prediccionesParaInsertar);
+
+                if (errorPredicciones) throw errorPredicciones;
+
+                // 3. Actualizamos al usuario para marcar que YA JUGÓ (Bloqueo futuro)
+                const { error: errorUpdate } = await supabaseClient
+                    .from('usuarios')
+                    .update({ ya_participo: true })
+                    .eq('id', usuarioActivo.id);
+
+                if (errorUpdate) throw errorUpdate;
+
+                // 4. Éxito total
+                alert("¡Pronóstico guardado con éxito! Mucha suerte.");
+                
+                // Opcional: Borramos el ticket por seguridad y lo mandamos a una página de gracias (o al login)
+                localStorage.removeItem('usuarioLogueado');
+                window.location.href = 'index.html'; 
+
+            } catch (error) {
+                console.error("Error al guardar:", error);
+                alert("Hubo un error al guardar tu pronóstico.");
+                btnSubmit.textContent = "Enviar Pronóstico";
+                btnSubmit.disabled = false;
+            }
         });
     }
+
+    // // 3. EMPAQUETAR DATOS PARA APPS SCRIPT ANTES DE ENVIAR
+    // const form = document.querySelector('form');
+    // if(form) {
+    //     form.addEventListener('submit', () => {
+    //         const allMatches = [];
+    //         document.querySelectorAll('.match-card').forEach(card => {
+    //             allMatches.push({
+    //                 id: card.dataset.matchId,
+    //                 equipoA: card.querySelector('.team-A').value,
+    //                 golesA: card.querySelector('.score-A').value,
+    //                 equipoB: card.querySelector('.team-B').value,
+    //                 golesB: card.querySelector('.score-B').value
+    //             });
+    //         });
+
+    //         // Transformamos todo el torneo a texto JSON y lo metemos al input oculto
+    //         document.getElementById('bracket_data').value = JSON.stringify(allMatches);
+    //     });
+    // }
 });
-*/

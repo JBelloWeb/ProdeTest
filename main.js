@@ -1,53 +1,67 @@
-const urlAppScript = "https://script.google.com/macros/s/AKfycbyhqVmTJF0cwOLga5nWUqwxa00AstSoC-cfIA3d9gVg62ZcL4Nf3r7lfvvrVdlmGzRW/exec";
+const supabaseUrl = 'https://juuwwrzrxensvjjzlpha.supabase.co';
+const supabaseKey = 'sb_publishable_v38rCE76Ze5wCobL1uBT9Q_Vs_xxUmU';
+window.supabaseClient = window.supabaseClient || window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = window.supabaseClient;
 
 const formulario = document.getElementById('formularioLogin');
-        const mensajeDiv = document.getElementById('mensaje');
-        const btnIngresar = document.getElementById('btnIngresar');
+const mensajeDiv = document.getElementById('mensaje');
+const btnIngresar = document.getElementById('btnIngresar');
 
-        formulario.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita que la página se recargue al enviar el formulario
+formulario.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-            const emailIngresado = document.getElementById('email').value.trim();
-            const claveIngresada = document.getElementById('clave').value.trim();
+    const emailIngresado = document.getElementById('email').value.trim();
+    const claveIngresada = document.getElementById('clave').value.trim();
 
-            // Deshabilitar el botón y mostrar mensaje de carga
-            btnIngresar.disabled = true;
-            mensajeDiv.textContent = "Verificando credenciales...";
-            mensajeDiv.className = "";
+    btnIngresar.disabled = true;
+    mensajeDiv.textContent = "Verificando credenciales...";
+    mensajeDiv.className = "";
 
-            try {
-                // 1. Descargar los datos desde el Google Sheet
-                // Reemplazá el fetch simple por este:
-                const respuesta = await fetch(urlAppScript, {
-                    redirect: "follow" 
-                });
-                const usuarios = await respuesta.json();
+    try {
+        // Le pedimos a Supabase que busque un usuario que coincida con email y clave
+        const { data: usuarioEncontrado, error } = await supabaseClient
+            .from('usuarios')
+            .select('*')
+            .eq('email', emailIngresado)
+            .eq('clave', claveIngresada)
+            .maybeSingle(); // maybeSingle devuelve 1 objeto o null si no existe
 
-                // 2. Buscar si existe una coincidencia exacta de mail y clave
-                const usuarioValido = usuarios.find(
-                    (usuario) => usuario.mail === emailIngresado && usuario.clave === claveIngresada
-                );
+        if (error) throw error;
 
-                // 3. Evaluar el resultado
-                if (usuarioValido) {
-                    mensajeDiv.textContent = "¡Ingreso exitoso! Redirigiendo...";
-                    mensajeDiv.className = "exito";
-                    
-                    // Redirigir a prode.html después de 1 segundo
-                    setTimeout(() => {
-                        window.location.href = 'prode.html';
-                    }, 1000);
-                    
-                } else {
-                    mensajeDiv.textContent = "Email o clave incorrectos.";
-                    mensajeDiv.className = "error";
-                    btnIngresar.disabled = false; // Vuelve a habilitar el botón
-                }
+        // 1. Validamos si el usuario existe
+        if (!usuarioEncontrado) {
+            mensajeDiv.textContent = "Email o clave incorrectos.";
+            mensajeDiv.className = "error";
+            btnIngresar.disabled = false;
+            return; // Cortamos la ejecución aquí
+        }
 
-            } catch (error) {
-                console.error("Error:", error);
-                mensajeDiv.textContent = "Hubo un error al conectar con la base de datos.";
-                mensajeDiv.className = "error";
-                btnIngresar.disabled = false;
-            }
-        });
+        // 2. Validamos si ya jugó
+        if (usuarioEncontrado.ya_participo === true) {
+            mensajeDiv.textContent = "Acceso denegado: Ya enviaste tu pronóstico previamente.";
+            mensajeDiv.className = "error";
+            btnIngresar.disabled = false;
+            return; // Cortamos la ejecución aquí
+        }
+
+        // 3. Éxito: Guardamos sus datos en el navegador para usarlos en el prode
+        mensajeDiv.textContent = "¡Ingreso exitoso! Redirigiendo...";
+        mensajeDiv.className = "exito";
+        
+        // Guardamos el ID y Nombre del usuario en el navegador
+        localStorage.setItem('usuarioLogueado', JSON.stringify({
+            id: usuarioEncontrado.id,
+            nombre: usuarioEncontrado.nombre
+        }));
+        
+        setTimeout(() => {
+            window.location.href = 'prode.html';
+        }, 1000);
+
+    } catch (error) {
+        console.error("Error:", error);
+        mensajeDiv.textContent = "Hubo un error al conectar con la base de datos.";
+        mensajeDiv.className = "error";
+        btnIngresar.disabled = false;
+    }
+});

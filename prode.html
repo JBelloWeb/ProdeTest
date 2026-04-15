@@ -8,11 +8,13 @@
 </head>
 <body>
     <main>
-        <form action="https://script.google.com/macros/s/AKfycbyEXVZGyBf1Uj25tOexKtWN3U7mn7B74scslvLT4jTVrUS-Z67L_3M8NAys16QngZPh/exec" method="POST">
-    
-            <label for="usuario">Tu Nombre:</label>
-            <input type="text" id="usuario" name="usuario" required placeholder="Baden Powell">
-            <hr>
+        <!-- <form action="https://script.google.com/macros/s/AKfycbyEXVZGyBf1Uj25tOexKtWN3U7mn7B74scslvLT4jTVrUS-Z67L_3M8NAys16QngZPh/exec" method="POST"> -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+        <h2 id="bienvenidaUsuario" style="text-align: center; color: black;">Cargando...</h2>
+        <hr>
+
+        <form id="formulario-prode">
 
             <h3>🇦🇷 Fase de Grupos - Argentina</h3>
             <div class="match">
@@ -48,16 +50,16 @@
 
             <hr>
 
-            <!--
+            <!-- -->
             <div class="bracket-container" id="mundial-bracket">
             </div>
 
             <input type="hidden" id="bracket_data" name="bracket_data">
-            -->
+           
 
             <button type="submit">Enviar Pronóstico</button>
         </form>
-        <!-- <script src="bracket.js" defer></script> -->
+        <!-- --><script src="bracket.js" defer></script> 
     </main>
 </body>
 </html>
